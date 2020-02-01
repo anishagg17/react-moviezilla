@@ -11,7 +11,7 @@ const Nav = styled.div`
   height: 3rem;
   display: grid;
   align-items: center;
-  //   margin-bottom: 2rem;
+  position: relative;
 `;
 
 export default function NavBar() {
