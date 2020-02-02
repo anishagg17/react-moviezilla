@@ -1,5 +1,4 @@
 import React from 'react';
-import SearchIcon from '@material-ui/icons/Search';
 import styled from 'styled-components';
 
 const Nav = styled.div`
@@ -15,5 +14,5 @@ const Nav = styled.div`
 `;
 
 export default function NavBar() {
-  return <Nav>{/* <SearchIcon /> */}</Nav>;
+  return <Nav>{/* */}</Nav>;
 }

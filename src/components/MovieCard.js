@@ -3,7 +3,12 @@ import styled from 'styled-components';
 import Ratings from 'react-ratings-declarative';
 
 const Container = styled.div`
-  width: 30vh;
+  width: 14rem;
+  margin: 0px 1rem;
+  @media screen and (max-width: 992px) {
+    width: 13rem;
+    margin-left: 1rem;
+  }
 `;
 
 const Cover = styled.div`
@@ -22,11 +27,10 @@ const Content = styled.div`
   padding: 0rem 0.5rem;
 
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
   flex-flow: row;
 
-  postion: relative;
   transition: all ease 2.5s;
   :hover {
     cursor: pointer;
