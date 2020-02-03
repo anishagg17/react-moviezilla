@@ -128,7 +128,7 @@ export default class Dashboard extends Component {
     let movies = moviesToDisplay.slice(0, showTill);
 
     let movieGrid = movies.map((movie, index) => (
-      <MovieCard movie={movie} key={index} />
+      <MovieCard movie={movie} key={movie['S.No.']} />
     ));
 
     return (

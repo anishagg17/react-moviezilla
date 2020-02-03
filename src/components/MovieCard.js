@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Ratings from 'react-ratings-declarative';
+import { Link, withRouter } from 'react-router-dom';
 
 const Container = styled.div`
   width: 14rem;
@@ -60,9 +61,14 @@ const FullName = styled.div`
   background: #fff;
 `;
 
-export default function MovieCard({ movie }) {
+function MovieCard(props) {
+  const { movie, history } = props;
   const name = movie['Movie name'].toString();
   const ratings = parseInt(movie['Star rating']);
+
+  const displayMovie = movieId => {
+    history.push(`/movie/${movieId}`);
+  };
 
   return (
     <Container>
@@ -72,7 +78,9 @@ export default function MovieCard({ movie }) {
           {name.substr(0, 15)}
           {name.length >= 15 && '...'}
         </Name>
-        <FullName className="full">{name}</FullName>
+        <FullName className="full" onClick={() => displayMovie(movie['S.No.'])}>
+          {name}
+        </FullName>
         <div className="org">
           <Ratings
             rating={ratings}
@@ -92,3 +100,4 @@ export default function MovieCard({ movie }) {
     </Container>
   );
 }
+export default withRouter(MovieCard);

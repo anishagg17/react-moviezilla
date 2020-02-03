@@ -15,10 +15,10 @@ const Container = styled.div`
       rgba(255, 255, 255, 0.3) 70%,
       rgba(255, 255, 255, 0.3)
     ),
-    url('https://thumbs.dreamstime.com/b/theater-spot-light-black-background-smoke-89406139.jpg')
-      0rem -9rem repeat;
+    url('https://images.unsplash.com/photo-1485846234645-a62644f84728?ixlib=rb-1.2.1&auto=format&fit=crop&w=1040&q=80')
+      0rem -19rem;
   background-size: cover;
-  background-repeat: no-repeat;
+  // background-repeat: no-repeat;
 `;
 
 const Input = styled.input`
