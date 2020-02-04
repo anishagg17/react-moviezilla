@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { Link as _Link } from 'react-router-dom';
+import { Link as _Link, withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { logout } from '../actions';
 
 const Nav = styled.div`
   background: linear-gradient(
@@ -36,11 +38,30 @@ const Link = styled(_Link)`
   }
 `;
 
-export default function NavBar() {
+const Navbar = ({ logout, user, history }) => {
+  // console.log('props Nav', value);
+  const handelLogOut = () => {
+    // console.log('history', history);
+    history.push('/');
+    logout();
+  };
   return (
-    <Nav>
-      <Link to={'/'}>Home</Link>
-      <Link to={'/signup'}>Sign Up</Link>
-    </Nav>
+    <div>
+      <Nav>
+        <Link to={'/'}>Home</Link>
+        {!user && <Link to={'/signup'}>Sign Up</Link>}
+        {user && (
+          <Link to={'/'} onClick={handelLogOut}>
+            Log Out
+          </Link>
+        )}
+      </Nav>
+    </div>
   );
-}
+};
+
+const mapStateToProps = state => ({
+  user: state.user,
+});
+
+export default withRouter(connect(mapStateToProps, { logout })(Navbar));

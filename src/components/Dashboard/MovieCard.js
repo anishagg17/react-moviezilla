@@ -14,8 +14,8 @@ const Container = styled.div`
 `;
 
 function MovieCard(props) {
-  const { movie, history, width } = props;
-  console.log('width', width);
+  const { movie, history } = props;
+  // console.log('width', width);
   const name = movie['Movie name'].toString();
   const ratings = parseInt(movie['Star rating']);
 
@@ -24,7 +24,7 @@ function MovieCard(props) {
   };
 
   return (
-    <Container width={width}>
+    <Container>
       <Cover />
       <Content>
         <Name className="org">

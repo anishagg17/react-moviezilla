@@ -1,7 +1,9 @@
 import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import styled from 'styled-components';
-// import _Button from '@material-ui/core/Button';
+import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { registerUser } from '../actions';
 
 const Form = styled.div`
   max-width: 40rem;
@@ -32,7 +34,8 @@ const Button = styled.button`
     background: #dddddd !important;
     cursor: not-allowed !important;
     color: white !important;
-    :hover {
+    :hover {import { withRouter } from 'react-router-dom';
+
       transform: none;
     }
   }
@@ -135,7 +138,10 @@ class SignUp extends React.Component {
   };
 
   handelSubmit = () => {
-    console.log('clicked');
+    const { name, password, email } = this.state;
+    const user = { name, password, email };
+    this.props.registerUser(user);
+    this.props.history.push('/');
   };
 
   render() {
@@ -199,4 +205,8 @@ class SignUp extends React.Component {
   }
 }
 
-export default SignUp;
+const mapStateToProps = state => ({
+  user: state,
+});
+
+export default withRouter(connect(mapStateToProps, { registerUser })(SignUp));
