@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import data from '../constants/data';
+import data from '../../constants/data';
 import MovieCard from './MovieCard';
 import styled from 'styled-components';
 import SearchBar from './SearchBar';
 import SortBar from './SortBar';
+import Icon from '@material-ui/core/Icon';
 
 const Flex = styled.div`
   display: flex;
@@ -18,25 +19,33 @@ const Container = styled.div`
   justify-content: flex-start;
   flex-flow: column;
   align-items: center;
+  .xbtn {
+    color: grey;
+  }
 `;
 
 const Button = styled.button`
   font-weight: 600;
   font-size: 0.8rem;
-
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   margin-bottom: 1.5rem;
   background-color: #eee;
   outline: none;
   border: none;
   border-radius: 50rem;
-  width: 6rem;
-  padding: 0.4rem 0;
+  width: 7.8rem;
+  padding: 0.4rem 0.3rem;
 
   :hover {
     background-color: #fff;
     border: 1px solid rgba(248, 220, 18, 1);
     color: rgba(248, 220, 18, 1);
     cursor: pointer;
+    .xbtn {
+      color: rgba(248, 220, 18, 1);
+    }
   }
 `;
 
@@ -138,7 +147,11 @@ export default class Dashboard extends Component {
         <Flex>{movieGrid}</Flex>
         {showTill < moviesToDisplay.length && (
           <Button onClick={this.increaseCount}>
-            Load {moviesToDisplay.length - showTill} more
+            <span>Load {moviesToDisplay.length - showTill} more</span>
+            <Icon
+              className="fa fa-plus-circle xbtn"
+              // style={{ color: yellow[500] }}
+            />
           </Button>
         )}
       </Container>
