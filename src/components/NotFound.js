@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import _Button from '@material-ui/core/Button';
 import styled from 'styled-components';
 
 const Button = styled.button`

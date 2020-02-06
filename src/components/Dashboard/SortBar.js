@@ -13,6 +13,15 @@ const Container = styled.div`
     font-weight: 500;
     font-size: 0.9rem;
   }
+  .active {
+    color: rgba(255, 255, 255, 1);
+    background: rgba(8, 120, 247, 0.96);
+    border: 2px solid rgba(255, 255, 255, 1);
+    :hover {
+      color: rgba(255, 255, 255, 1);
+      border: 2px solid rgba(255, 255, 255, 1);
+    }
+  }
 `;
 
 const Button = styled.button`
@@ -36,13 +45,28 @@ const Button = styled.button`
 class SortBar extends Component {
   render() {
     const { currentSort, onChangeSort } = this.props;
-    // console.log('currentSort', currentSort);
+    console.log('currentSort', currentSort);
     return (
       <Container>
         <span>Sort :</span>
-        <Button onClick={() => onChangeSort('name')}>By Name</Button>
-        <Button onClick={() => onChangeSort('year')}>By Year</Button>
-        <Button onClick={() => onChangeSort('rating')}>By Rating</Button>
+        <Button
+          className={`${currentSort === 'name' && 'active'}`}
+          onClick={() => onChangeSort('name')}
+        >
+          By Name
+        </Button>
+        <Button
+          className={`${currentSort === 'year' && 'active'}`}
+          onClick={() => onChangeSort('year')}
+        >
+          By Year
+        </Button>
+        <Button
+          className={`${currentSort === 'rating' && 'active'}`}
+          onClick={() => onChangeSort('rating')}
+        >
+          By Rating
+        </Button>
         {currentSort !== '' && (
           <Button onClick={() => onChangeSort('')}>Clear</Button>
         )}
