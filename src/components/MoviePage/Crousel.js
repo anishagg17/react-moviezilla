@@ -42,31 +42,41 @@ class Crousel extends Component {
   };
 
   rotateCrousel = order => {
-    this.setState({
-      start: this.state.start + order,
-    });
+    let { featuredMovies } = this.state;
+    let totalMovies = featuredMovies.length,
+      newMovie;
+    if (order === -1) {
+      newMovie = featuredMovies[totalMovies - 1];
+      featuredMovies = featuredMovies.slice(0, totalMovies - 1);
+      this.setState({
+        featuredMovies: [newMovie, ...featuredMovies],
+      });
+    } else {
+      newMovie = featuredMovies[0];
+      featuredMovies = featuredMovies.slice(1, totalMovies);
+      this.setState({
+        featuredMovies: [...featuredMovies, newMovie],
+      });
+    }
   };
 
   render() {
     let { featuredMovies, start } = this.state;
-    let totalMovies = featuredMovies.length;
-    console.log(totalMovies);
+    // console.log(featuredMovies);
     featuredMovies = featuredMovies.slice(start, start + 3);
     return (
       <Carousel>
-        {start !== 0 && (
-          <Button onClick={() => this.rotateCrousel(-1)}>
-            <ChevronLeftIcon />
-          </Button>
-        )}
+        <Button onClick={() => this.rotateCrousel(-1)}>
+          <ChevronLeftIcon />
+        </Button>
+
         {featuredMovies.map(movie => (
           <CrouselMovieCard movie={movie} key={movie['S.No.']} />
         ))}
-        {start !== totalMovies - 3 && (
-          <Button onClick={() => this.rotateCrousel(+1)}>
-            <ChevronRightIcon />
-          </Button>
-        )}
+
+        <Button onClick={() => this.rotateCrousel(+1)}>
+          <ChevronRightIcon />
+        </Button>
       </Carousel>
     );
   }
