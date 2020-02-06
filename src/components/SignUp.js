@@ -141,7 +141,7 @@ class SignUp extends React.Component {
     const { name, password, email } = this.state;
     const user = { name, password, email };
     this.props.registerUser(user);
-    this.props.history.push('/');
+    this.props.history.push('/dashboard');
   };
 
   render() {

@@ -48,8 +48,8 @@ const Navbar = ({ logout, user, history }) => {
   return (
     <div>
       <Nav>
-        <Link to={'/'}>Home</Link>
-        {!user && <Link to={'/signup'}>Sign Up</Link>}
+        <Link to={'/dashboard'}>Home</Link>
+        {!user && <Link to={'/'}>Sign Up</Link>}
         {user && (
           <Link to={'/'} onClick={handelLogOut}>
             Log Out

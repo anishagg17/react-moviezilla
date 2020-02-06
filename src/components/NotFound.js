@@ -122,7 +122,7 @@ const NotFound = () => {
           </div>
         </div>
       </NotFoundText>
-      <Link to="/">
+      <Link to="/dashboard">
         <Button>Home</Button>
       </Link>
     </Container>

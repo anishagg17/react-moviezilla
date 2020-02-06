@@ -21,8 +21,8 @@ function App() {
     <Provider store={store}>
       <NavBar />
       <Switch>
-        <Route exact path="/" component={Dashboard} />
-        <Route path="/signup" component={SignUp} />
+        <Route exact path="/" component={SignUp} />
+        <Route path="/dashboard" component={Dashboard} />
         <Route path="/movie/:id" component={MoviePage} />
         <Route path="/" component={NotFound} />
       </Switch>
