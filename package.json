@@ -8,6 +8,7 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
+    "lodash.debounce": "^4.0.8",
     "prettier": "^1.19.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
@@ -17,7 +18,8 @@
     "react-scripts": "3.3.1",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
-    "styled-components": "^5.0.0"
+    "styled-components": "^5.0.0",
+    "superagent": "^5.2.1"
   },
   "scripts": {
     "start": "react-scripts start",

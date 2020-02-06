@@ -4,21 +4,27 @@ import MovieCard from './MovieCard';
 import styled from 'styled-components';
 import SearchBar from './SearchBar';
 import SortBar from './SortBar';
-import Icon from '@material-ui/core/Icon';
+import debounce from 'lodash.debounce';
 
 const Flex = styled.div`
+  width: 100vw;
   display: flex;
   flex-wrap: wrap;
-  align-items: flex-start;
+  align-items: center;
   justify-content: flex-start;
-  margin: 2rem 4rem 2rem 4rem;
+  margin: 2rem auto;
+  position: relative;
+  left: 50%;
+  top: 50%;
+  transform: translate(-45%, 0%);
 `;
 
 const Container = styled.div`
+  width: 100vw;
   display: flex;
-  justify-content: flex-start;
-  flex-flow: column;
+  justify-content: center;
   align-items: center;
+  flex-flow: column;
   .xbtn {
     color: grey;
   }
@@ -49,21 +55,43 @@ const Button = styled.button`
   }
 `;
 
-export default class Dashboard extends Component {
-  state = {
-    totalMovies: data.data,
-    moviesToDisplay: data.data,
-    showTill: 9,
-    query: '',
-    sortBy: '',
-  };
+class InfiniteUsers extends Component {
+  constructor(props) {
+    super(props);
 
-  increaseCount = () => {
-    const { showTill, moviesToDisplay } = this.state;
-    this.setState({
-      showTill: Math.min(showTill + 9, moviesToDisplay.length),
-    });
-  };
+    // Sets up our initial state
+    this.state = {
+      error: false,
+      hasMore: true,
+      isLoading: false,
+      users: [],
+      totalMovies: data.data,
+      moviesToDisplay: data.data,
+      showTill: 15,
+      query: '',
+      sortBy: '',
+    };
+
+    window.onscroll = debounce(() => {
+      const {
+        loadMovies,
+        state: { error, isLoading, hasMore },
+      } = this;
+
+      if (error || isLoading || !hasMore) return;
+
+      if (
+        window.innerHeight + document.documentElement.scrollTop ===
+        document.documentElement.offsetHeight
+      ) {
+        loadMovies();
+      }
+    }, 100);
+  }
+
+  componentWillMount() {
+    this.loadMovies();
+  }
 
   changeQuery = e => {
     const { totalMovies } = this.state,
@@ -77,7 +105,6 @@ export default class Dashboard extends Component {
 
     this.setState({
       query,
-      showTill: Math.min(9, moviesToDisplay.length),
       moviesToDisplay,
     });
     // console.log(this.state);
@@ -128,7 +155,18 @@ export default class Dashboard extends Component {
     this.setState({
       sortBy: val,
       moviesToDisplay,
-      showTill: 9,
+    });
+  };
+
+  loadMovies = () => {
+    const { showTill, moviesToDisplay } = this.state;
+
+    this.setState({
+      showTill: Math.min(showTill + 9, moviesToDisplay.length),
+      hasMore:
+        Math.min(showTill + 9, moviesToDisplay.length) !==
+        moviesToDisplay.length,
+      isLoading: false,
     });
   };
 
@@ -136,7 +174,7 @@ export default class Dashboard extends Component {
     const { showTill, moviesToDisplay, sortBy, query } = this.state;
     let movies = moviesToDisplay.slice(0, showTill);
 
-    let movieGrid = movies.map((movie, index) => (
+    let movieGrid = movies.map(movie => (
       <MovieCard movie={movie} key={movie['S.No.']} />
     ));
 
@@ -145,16 +183,8 @@ export default class Dashboard extends Component {
         <SearchBar onChangeQuery={this.changeQuery} query={query} />
         <SortBar onChangeSort={this.changeSort} currentSort={sortBy} />
         <Flex>{movieGrid}</Flex>
-        {showTill < moviesToDisplay.length && (
-          <Button onClick={this.increaseCount}>
-            <span>Load {moviesToDisplay.length - showTill} more</span>
-            <Icon
-              className="fa fa-plus-circle xbtn"
-              // style={{ color: yellow[500] }}
-            />
-          </Button>
-        )}
       </Container>
     );
   }
 }
+export default InfiniteUsers;

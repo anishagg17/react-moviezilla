@@ -2,6 +2,7 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import SignUp from './components/SignUp';
 import NavBar from './components/Navbar';
+// import Dashboard from '/components/Dashboard/Dashboard';
 import Dashboard from './components/Dashboard/Dashboard';
 import NotFound from './components/NotFound';
 import MoviePage from './components/MoviePage/MoviePage';
