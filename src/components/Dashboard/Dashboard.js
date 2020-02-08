@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
+import InfiniteScroll from 'react-infinite-scroller';
 import data from '../../constants/data';
 import MovieCard from './MovieCard';
 import styled from 'styled-components';
 import SearchBar from './SearchBar';
 import SortBar from './SortBar';
-import debounce from 'lodash.debounce';
+import { css } from '@emotion/core';
+import { PacmanLoader } from 'react-spinners';
 
 const Flex = styled.div`
   width: 100vw;
@@ -54,43 +56,24 @@ const Button = styled.button`
     }
   }
 `;
+const override = css`
+  // padding: 30px;
+  border-color: red;
+`;
 
-class InfiniteUsers extends Component {
+class App extends Component {
   constructor(props) {
     super(props);
 
-    // Sets up our initial state
     this.state = {
-      error: false,
-      hasMore: true,
-      isLoading: false,
-      users: [],
       totalMovies: data.data,
       moviesToDisplay: data.data,
       showTill: 30,
+      tracks: [],
+      hasMoreItems: true,
       query: '',
       sortBy: '',
     };
-
-    window.onscroll = debounce(() => {
-      const {
-        loadMovies,
-        state: { error, isLoading, hasMore },
-      } = this;
-
-      if (error || isLoading || !hasMore) return;
-
-      if (
-        window.innerHeight + document.documentElement.scrollTop ===
-        document.documentElement.offsetHeight
-      ) {
-        loadMovies();
-      }
-    }, 100);
-  }
-
-  componentWillMount() {
-    this.loadMovies();
   }
 
   changeQuery = e => {
@@ -155,23 +138,45 @@ class InfiniteUsers extends Component {
     this.setState({
       sortBy: val,
       moviesToDisplay,
+      showTill: 30,
+      hasMoreItems: true,
     });
   };
 
-  loadMovies = () => {
-    const { showTill, moviesToDisplay } = this.state;
-
-    this.setState({
-      showTill: Math.min(showTill + 9, moviesToDisplay.length),
-      hasMore:
-        Math.min(showTill + 9, moviesToDisplay.length) !==
-        moviesToDisplay.length,
-      isLoading: false,
-    });
+  loadItems = async page => {
+    let { totalMovies, showTill } = this.state;
+    if (totalMovies.length > showTill) {
+      setTimeout(
+        this.setState({
+          showTill: showTill + 10,
+        }),
+        4000,
+      );
+    } else {
+      this.setState({
+        hasMoreItems: false,
+      });
+    }
   };
 
   render() {
-    const { showTill, moviesToDisplay, sortBy, query } = this.state;
+    const loader = (
+      <Flex style={{ justifyContent: 'center' }}>
+        <PacmanLoader
+          css={override}
+          size={90} // or 150px
+          color={'rgba(248,225,18,1)'}
+        />
+      </Flex>
+    );
+
+    const {
+      showTill,
+      moviesToDisplay,
+      sortBy,
+      query,
+      hasMoreItems,
+    } = this.state;
     let movies = moviesToDisplay.slice(0, showTill);
 
     let movieGrid = movies.map(movie => (
@@ -182,9 +187,17 @@ class InfiniteUsers extends Component {
       <Container>
         <SearchBar onChangeQuery={this.changeQuery} query={query} />
         <SortBar onChangeSort={this.changeSort} currentSort={sortBy} />
-        <Flex>{movieGrid}</Flex>
+
+        <InfiniteScroll
+          pageStart={0}
+          loadMore={this.loadItems.bind(this)}
+          hasMore={hasMoreItems}
+          loader={loader}
+        >
+          <Flex>{movieGrid}</Flex>
+        </InfiniteScroll>
       </Container>
     );
   }
 }
-export default InfiniteUsers;
+export default App;
