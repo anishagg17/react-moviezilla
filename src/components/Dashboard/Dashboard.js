@@ -67,7 +67,7 @@ class InfiniteUsers extends Component {
       users: [],
       totalMovies: data.data,
       moviesToDisplay: data.data,
-      showTill: 15,
+      showTill: 30,
       query: '',
       sortBy: '',
     };
