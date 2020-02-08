@@ -57,8 +57,10 @@ const Button = styled.button`
   }
 `;
 const override = css`
-  // padding: 30px;
   border-color: red;
+  display: block;
+  text-align: center;
+  margin: 1rem auto;
 `;
 
 class App extends Component {
@@ -146,12 +148,11 @@ class App extends Component {
   loadItems = async page => {
     let { totalMovies, showTill } = this.state;
     if (totalMovies.length > showTill) {
-      setTimeout(
+      setTimeout(() => {
         this.setState({
           showTill: showTill + 10,
-        }),
-        4000,
-      );
+        });
+      }, 900);
     } else {
       this.setState({
         hasMoreItems: false,
@@ -161,13 +162,11 @@ class App extends Component {
 
   render() {
     const loader = (
-      <Flex style={{ justifyContent: 'center' }}>
-        <PacmanLoader
-          css={override}
-          size={90} // or 150px
-          color={'rgba(248,225,18,1)'}
-        />
-      </Flex>
+      <PacmanLoader
+        css={override}
+        size={90} // or 150px
+        color={'rgba(248,225,18,1)'}
+      />
     );
 
     const {
